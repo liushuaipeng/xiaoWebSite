@@ -5,6 +5,7 @@
       v-html="testHtml">
 
     </div>
+    <a href="#布局">布局</a>
   </div>
 </template>
 <script>
@@ -13,6 +14,7 @@ import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown.css";
 
 import testmd from "raw-loader!./test.md";
+import { anchorPoint } from "../assets/js/common.js";
 export default {
   data() {
     return {
@@ -23,6 +25,12 @@ export default {
   mounted() {
     this.handbook = testmd;
     this.testHtml = this.markdownIt.render(testmd);
+    // anchorPoint();
+
+    setTimeout(() => {
+      anchorPoint();
+      // require("../plugins/common.js").anchorPoint();
+    }, 0);
   }
 };
 </script>

@@ -17,7 +17,7 @@ module.exports = {
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       { rel: "stylesheet", href: "/katex/katex.min.css" }
     ],
-    script: [{ src: "/katex/katex.min.js", srr: false }]
+    script: [{ src: "/katex/katex.min.js", ssr: false }]
   },
 
   /*
@@ -35,7 +35,7 @@ module.exports = {
    */
   plugins: [
     "@/plugins/element-ui",
-    { src: "@/plugins/vue-mavon-editor", srr: false }
+    { src: "@/plugins/vue-mavon-editor", ssr: false }
   ],
 
   /*
