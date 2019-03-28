@@ -64,6 +64,17 @@
 <script>
 import { anchorPoint } from "../assets/js/common.js";
 export default {
+  head: {
+    title: "刘帅鹏的个人网站 - Liu Shuaipeng's Personal Website",
+    meta: [
+      {
+        name: "description",
+        content:
+          "刘帅鹏的个人网站，记录个人开发和学习过程中所遇到问题，以及解决方案和感悟，关注web前端、node技术。"
+      },
+      { name: "keywords", content: "刘帅鹏" }
+    ]
+  },
   data() {
     return {
       goBg: "",
