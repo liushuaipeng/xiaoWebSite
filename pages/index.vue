@@ -84,12 +84,10 @@ export default {
   mounted() {
     this.updateBgImg();
     this.setRem();
-    this.setOffset();
     anchorPoint();
     window.onresize = () => {
       // this.updateBgImg();
       this.setRem();
-      this.setOffset();
     };
   },
   methods: {
@@ -111,17 +109,6 @@ export default {
           ".jpg");
       }
     },
-    setOffset() {
-      var paddingPx = (document.documentElement.clientWidth - 1190) / 2 + "px";
-      if (document.documentElement.clientWidth < 1190) {
-        paddingPx = "10px";
-      }
-      document.querySelector(".wrap_main").style.paddingLeft = paddingPx;
-      document.querySelector(".wrap_main").style.paddingRight = paddingPx;
-
-      var hh = document.querySelector(".home .wrap_main").clientHeight;
-      document.querySelector(".home .bg").style.height = hh + "px";
-    },
     setRem() {
       var cw = document.documentElement.clientWidth;
       if (cw < 750) {
@@ -139,9 +126,8 @@ export default {
   width: 100%;
   .bg {
     width: 100%;
-    height: 50vw;
-    position: absolute;
-    top: 100vh;
+    height: 100%;
+    position: fixed;
     opacity: 1;
     background-attachment: fixed;
     background-position: center center;
@@ -189,6 +175,9 @@ export default {
     }
     .wrap_main {
       font-size: 0.2rem;
+      max-width: 1190px;
+      margin: 0 auto;
+      padding: 10px;
       padding-top: 50px;
       .wrap_main_more {
         text-align: center;
@@ -260,8 +249,8 @@ export default {
       font-weight: 400;
     }
     > * {
-      margin: 0 10px;
-      font-size: 0.14rem;
+      margin: 0 0.1rem;
+      font-size: 0.16rem;
     }
     a {
       color: #ecf0f1;
@@ -273,9 +262,6 @@ export default {
   }
 }
 @media (max-width: 768px) {
-  .home .bg {
-    background-image: url("~assets/images/row1.jpg");
-  }
   .home {
     .wrapper {
       .wrap_main {
@@ -297,6 +283,9 @@ export default {
           }
         }
       }
+    }
+    .wrap_footer {
+      margin-top: 0px;
     }
   }
 }
