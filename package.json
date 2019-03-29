@@ -13,19 +13,25 @@
   "config": {
     "nuxt": {
       "host": "0.0.0.0",
-      "port": "3000"
+      "port": "1104"
     }
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.11",
     "highlight.js": "^9.15.6",
     "koa": "^2.6.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.10.1",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "markdown-it-github-headings": "^1.1.1",
     "mavon-editor": "^2.7.2",
+    "md5": "^2.2.1",
     "nuxt": "^2.4.0",
+    "ramda": "^0.26.1",
     "raw-loader": "^2.0.0"
   },
   "devDependencies": {
