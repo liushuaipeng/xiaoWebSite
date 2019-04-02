@@ -8,7 +8,7 @@ import R from "ramda";
 const app = new Koa();
 
 const r = path => resolve(__dirname, path);
-const MIDDLEWAREARR = ["tools", "router"];
+const MIDDLEWAREARR = ["tools", "mongo", "router"];
 const useMiddleware = app => {
   return R.map(
     R.compose(

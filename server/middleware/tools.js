@@ -1,12 +1,13 @@
 import koaBodyParser from "koa-bodyparser";
 import koaSession from "koa-session";
+import { config } from "../config";
 
 export const setBodyParser = app => {
   app.use(koaBodyParser());
 };
 
 export const setSession = app => {
-  app.keys = ["some secret hurr"];
+  app.keys = [config.KEY];
 
   const CONFIG = {
     key: "koa:sess",

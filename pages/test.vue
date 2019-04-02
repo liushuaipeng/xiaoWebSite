@@ -1,6 +1,9 @@
 <template>
   <div class="test">
-    
+    <no-ssr>
+      <mavon-editor v-model="handbook"></mavon-editor>
+    </no-ssr>
+
     <div class="test_html markdown-body"
       v-html="testHtml">
 

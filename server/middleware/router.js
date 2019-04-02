@@ -1,7 +1,6 @@
 import koaRouter from "koa-router";
-import md5 from "md5";
-import { config } from "../config/config";
-import { userList } from "../config/userList";
+
+// import mongoose from "mongoose";
 
 export const router = app => {
   const router = new koaRouter();
@@ -11,19 +10,33 @@ export const router = app => {
     let user = ctx.session.user;
     ctx.body = { user };
   });
-  router.post("/api/admin/login", (ctx, next) => {
-    console.log("-", ctx.request.body);
-    let user = ctx.request.body;
-    let userkey = md5(md5(user.username + config.KEY) + user.password);
-    userList.forEach(item => {
-      if (item.key === userkey) {
-        ctx.session.user = item;
-        ctx.body = {
-          state: 0,
-          message: "登录成功"
-        };
+
+  // 对后台接口进行登录校验
+  router.all("/api/admin/*", async (ctx, next) => {
+    // 不需要校验的接口
+    const noVerifyUserUrlArr = ["/api/admin/login"];
+    let flag;
+    noVerifyUserUrlArr.forEach(url => {
+      if (url === ctx.url) {
+        flag = true;
       }
     });
+    if (flag) {
+      await next();
+    } else {
+      if (ctx.session.user) {
+        await next();
+      } else {
+        ctx.body = {
+          state: 401,
+          message: "未登录"
+        };
+      }
+    }
   });
-  app.use(router.routes()).use(router.allowedMethods());
+  app.use(router.routes());
+  app.use(require("../routes/user").routes());
+  app.use(require("../routes/article").routes());
+  app.use(require("../routes/tag").routes());
+  app.use(router.allowedMethods());
 };
