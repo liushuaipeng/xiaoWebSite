@@ -2,7 +2,9 @@
 
   <div class="admin">
     <el-container>
-      <el-header height="50px">admin</el-header>
+      <el-header height="50px">
+        <div>admin</div>
+      </el-header>
       <el-container class="admin_content">
         <el-aside width="200px">
           <admin-aside></admin-aside>
@@ -16,14 +18,16 @@
         </el-main>
       </el-container>
     </el-container>
-
+    <admin-login></admin-login>
   </div>
 </template>
 <script>
 import adminAside from "../components/adminAside";
+import adminLogin from "../components/adminLogin";
 export default {
   components: {
-    adminAside
+    adminAside,
+    adminLogin
   }
 };
 </script>

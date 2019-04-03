@@ -58,6 +58,7 @@
 
 <script>
 import axios from "axios";
+import { requestAdminTagList, requestAdminArticleAdd } from "~/assets/api/";
 export default {
   layout: "admin",
   data() {
@@ -77,10 +78,8 @@ export default {
     // 异步搜索标签
     async remoteMethod(keyword) {
       this.loadingTag = true;
-      let data = await axios.get("/api/admin/tag/list", {
-        params: { keyword }
-      });
-      this.tagList = data.data.data.list;
+      let res = await requestAdminTagList({ keyword });
+      this.tagList = res.data.list;
       this.loadingTag = false;
       return this.tagList;
     },
@@ -89,7 +88,14 @@ export default {
       this.form.state = state;
       let params = Object.assign({}, this.form);
       delete params.tag;
-      let data = await axios.post("/api/admin/article/add", params);
+      let res = await requestAdminArticleAdd(params);
+      if (res.state === 0) {
+        this.$message({
+          message: res.message,
+          type: "success",
+          showClose: true
+        });
+      }
     },
     // tag变化时处理tags的数据格式
     tagChange(ids) {

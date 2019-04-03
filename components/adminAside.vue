@@ -36,7 +36,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$route.name);
     this.menuActiveName = this.$route.name;
   }
 };

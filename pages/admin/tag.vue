@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { requestAdminTagList, requestAdminTagAdd } from "~/assets/api/";
 export default {
   layout: "admin",
   data() {
@@ -42,20 +42,20 @@ export default {
     addFormSubmit() {
       this.$refs.addForm.validate(valid => {
         if (valid) {
-          axios.post("/api/admin/tag/add", this.addForm).then(res => {
-            this.$message({
-              showClose: true,
-              message: res.data.message,
-              type: res.data.state === 0 ? "success" : "error"
-            });
+          requestAdminTagAdd(this.addForm).then(res => {
+            if (res.state === 0) {
+              this.$message({
+                showClose: true,
+                message: res.message,
+                type: "success"
+              });
+            }
           });
         }
       });
     },
     async getTagList() {
-      let { data } = await axios.get(
-        "http://localhost:1104/api/admin/tag/list"
-      );
+      let data = await requestAdminTagList();
       console.log(data);
     }
   },

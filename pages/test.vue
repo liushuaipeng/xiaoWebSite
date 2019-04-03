@@ -17,7 +17,7 @@ import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown.css";
 
 import testmd from "raw-loader!./test.md";
-import { anchorPoint } from "../assets/js/common.js";
+import { anchorPoint } from "~/assets/js/common.js";
 export default {
   data() {
     return {
