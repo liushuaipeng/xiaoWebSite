@@ -24,7 +24,8 @@ export const tagAsArticle = async (tagid, artid) => {
     title: article.title,
     author: article.author,
     authorId: article.authorId,
-    describe: article.describe
+    describe: article.describe,
+    cover: article.cover
   });
   let data = { articles };
   await ATag.updateOne({ id: tagid }, { $set: data });

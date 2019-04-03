@@ -3,14 +3,12 @@
     <el-form ref="form"
       :model="form"
       label-width="40px">
-      <el-row :gutter="30">
-        <el-col :span="12">
+      <el-row :gutter="80">
+        <el-col :span="15">
           <el-form-item label="名称">
             <el-input v-model="form.title"
               placeholder="请输入标题"></el-input>
           </el-form-item>
-        </el-col>
-        <el-col :span="12">
           <el-form-item label="标签">
             <el-select v-model="form.tag"
               multiple
@@ -29,17 +27,34 @@
               </el-option>
             </el-select>
           </el-form-item>
-        </el-col>
-        <el-col :span="12">
           <el-form-item label="描述">
             <el-input v-model="form.describe"
               placeholder="请输入描述"></el-input>
           </el-form-item>
         </el-col>
+        <el-col :span="7">
+          <el-form-item label="封面">
+            <el-upload class="cover-uploader"
+              name="files"
+              action="http://localhost:1104/api/admin/upload"
+              :show-file-list="false"
+              :on-success="handleCoverSuccess"
+              :before-upload="beforeCoverUpload">
+              <img v-if="form.cover"
+                :src="form.cover"
+                class="cover">
+              <i v-else
+                class="el-icon-plus cover-uploader-icon"></i>
+            </el-upload>
+
+          </el-form-item>
+        </el-col>
         <el-col :span="24">
           <no-ssr>
             <mavon-editor v-model="form.content"
-              class="mavon_editor"></mavon-editor>
+              class="mavon_editor"
+              @imgAdd="imgUploadME"
+              ref="md"></mavon-editor>
           </no-ssr>
         </el-col>
         <el-col :span="24">
@@ -65,12 +80,14 @@ export default {
     return {
       loadingTag: false,
       tagList: [],
+
       form: {
         state: 0,
         title: "测试文章",
         tags: [],
         describe: "测试文章的测试描述",
-        content: "#### how to use mavonEditor in nuxt.js\n### 测试换行"
+        content: "#### how to use mavonEditor in nuxt.js\n### 测试换行",
+        cover: ""
       }
     };
   },
@@ -111,6 +128,22 @@ export default {
           }
         });
       });
+    },
+    handleCoverSuccess(res) {
+      this.form.cover = res.data.list[0].url;
+    },
+    beforeCoverUpload() {},
+    async imgUploadME(pos, $file) {
+      var formdata = new FormData();
+      formdata.append("files", $file);
+      let res = await axios({
+        url: "/api/admin/upload",
+        method: "post",
+        data: formdata,
+        headers: { "Content-Type": "multipart/form-data" }
+      });
+      let url = res.data.data.list[0].url;
+      this.$refs.md.$img2Url(pos, url);
     }
   },
   async mounted() {
@@ -134,4 +167,32 @@ export default {
   height: 500px;
 }
 </style>
+<style lang="less">
+.addArticle {
+  .cover-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-uploader .el-upload:hover {
+    border-color: #409eff;
+  }
+  .cover-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .cover {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+}
+</style>
+
 

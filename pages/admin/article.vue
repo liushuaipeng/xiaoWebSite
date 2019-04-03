@@ -1,5 +1,9 @@
 <template>
-  <div>文章页面</div>
+  <div>
+    <nuxt-link to="/admin/addArticle">
+      <el-button>写文章</el-button>
+    </nuxt-link>
+  </div>
 </template>
 
 <script>

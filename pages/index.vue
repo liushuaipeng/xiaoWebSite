@@ -93,19 +93,18 @@ export default {
   methods: {
     updateBgImg() {
       if (document.documentElement.clientWidth > 768) {
-        this.homeBg = require("../assets/images/col" +
+        this.homeBg = require("../assets/images/bg_row" +
           Math.floor(Math.random() * 17) +
           ".jpg");
-        this.goBg = require("../assets/images/bg" +
+        this.goBg = require("../assets/images/row" +
           Math.floor(Math.random() * 6) +
           ".jpg");
       } else {
-        let arr = [0, 1, 2, 3, 4, 5, 6, 7];
-        this.homeBg = require("../assets/images/row" +
-          arr.splice(Math.floor(Math.random() * 8), 1)[0] +
+        this.homeBg = require("../assets/images/bg_col" +
+          Math.floor(Math.random() * 8) +
           ".jpg");
-        this.goBg = require("../assets/images/row" +
-          arr.splice(Math.floor(Math.random() * 7), 1)[0] +
+        this.goBg = require("../assets/images/col" +
+          Math.floor(Math.random() * 9) +
           ".jpg");
       }
     },

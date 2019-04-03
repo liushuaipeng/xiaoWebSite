@@ -6,9 +6,9 @@ export const router = app => {
   const router = new koaRouter();
   // 测试接口
   router.get("/api/test", (ctx, next) => {
-    console.log(ctx.session.user);
+    console.log(ctx.request)
     let user = ctx.session.user;
-    ctx.body = { user };
+    ctx.body = ctx.request;
   });
 
   // 对后台接口进行登录校验
@@ -38,5 +38,6 @@ export const router = app => {
   app.use(require("../routes/user").routes());
   app.use(require("../routes/article").routes());
   app.use(require("../routes/tag").routes());
+  app.use(require("../routes/upload").routes());
   app.use(router.allowedMethods());
 };
