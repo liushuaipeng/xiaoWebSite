@@ -18,22 +18,24 @@
         <el-row>
           <el-col :span="12"
             :xs="24"
-            v-for="(item,i) in [1,2,3,4]"
-            :key="i">
+            v-for="article in articleList"
+            :key="article.id">
             <div class="wrap_item">
               <el-card shadow="hover">
                 <div style="display:flex;flex-wrap:wrap;">
-                  <div class="wrap_item_image">
+                  <div class="wrap_item_image"
+                    :style="{backgroundImage:'url('+article.cover+')'}">
                   </div>
                   <div class="wrap_item_content">
-                    <div class="wrap_item_content_title">标题</div>
-                    <div class="wrap_item_content_info">作者：<span style="color:#16a085;">刘帅鹏</span> &nbsp; 时间：2017-03-27</div>
+                    <div class="wrap_item_content_title">{{article.title}}</div>
+                    <div class="wrap_item_content_info">作者：<span style="color:#16a085;">{{article.author}}</span> &nbsp; 时间：{{article.meta.createdAt.substr(0,10)}}</div>
                     <div class="wrap_item_content_tag">
-                      <el-tag size="small">node</el-tag>
-                      <el-tag size="small">css</el-tag>
-                      <el-tag size="small">web前端</el-tag>
+                      <el-tag v-for="atag in article.tags"
+                        :key="atag.id"
+                        size="small">{{atag.name}}
+                      </el-tag>
                     </div>
-                    <div class="wrap_item_content_desc">这是这篇文章的描述这是这篇文章的描述这是这篇文章的描述...</div>
+                    <div class="wrap_item_content_desc">{{article.describe}}</div>
                   </div>
                 </div>
               </el-card>
@@ -41,7 +43,7 @@
           </el-col>
           <el-col :span="24">
             <div class="wrap_main_more">
-              <nuxt-link to="/">
+              <nuxt-link to="/article/list">
                 <el-button icon="el-icon-more">查看更多</el-button>
               </nuxt-link>
             </div>
@@ -67,6 +69,7 @@
 </template>
 
 <script>
+import { requestArticleList } from "~/assets/api";
 import { anchorPoint } from "../assets/js/common.js";
 export default {
   head: {
@@ -80,6 +83,11 @@ export default {
       { name: "keywords", content: "刘帅鹏" }
     ]
   },
+  async asyncData() {
+    let res = await requestArticleList();
+    let list = res.data.list.slice(0, 4);
+    return { articleList: list };
+  },
   data() {
     return {
       goBg: "",
@@ -91,7 +99,6 @@ export default {
     this.setRem();
     anchorPoint();
     window.onresize = () => {
-      // this.updateBgImg();
       this.setRem();
     };
   },

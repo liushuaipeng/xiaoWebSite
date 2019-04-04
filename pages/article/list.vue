@@ -45,7 +45,7 @@
                 </div>
                 <div class="wrap_item_content">
                   <div class="wrap_item_content_title">{{article.title}}</div>
-                  <div class="wrap_item_content_info">作者：<span style="color:#16a085;">{{article.author}}</span> &nbsp; 时间：2017-03-27</div>
+                  <div class="wrap_item_content_info">作者：<span style="color:#16a085;">{{article.author}}</span> &nbsp; 时间：{{article.meta.createdAt.substr(0,10)}}</div>
                   <div class="wrap_item_content_tag">
                     <el-tag v-for="atag in article.tags"
                       :key="atag.id"
