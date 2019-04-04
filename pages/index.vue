@@ -28,6 +28,11 @@
                   <div class="wrap_item_content">
                     <div class="wrap_item_content_title">标题</div>
                     <div class="wrap_item_content_info">作者：<span style="color:#16a085;">刘帅鹏</span> &nbsp; 时间：2017-03-27</div>
+                    <div class="wrap_item_content_tag">
+                      <el-tag size="small">node</el-tag>
+                      <el-tag size="small">css</el-tag>
+                      <el-tag size="small">web前端</el-tag>
+                    </div>
                     <div class="wrap_item_content_desc">这是这篇文章的描述这是这篇文章的描述这是这篇文章的描述...</div>
                   </div>
                 </div>
@@ -188,7 +193,7 @@ export default {
         padding: 30px;
         .el-card {
           display: flex;
-          background-color: rgba(236, 240, 241, 0.7);
+          background-color: rgba(236, 240, 241, 0.8);
           border-color: #7f8c8d;
           color: #1a2a3a;
           cursor: pointer;
@@ -220,9 +225,14 @@ export default {
             line-height: 30px;
             overflow: hidden;
           }
+          .wrap_item_content_tag {
+            .el-tag {
+              margin: 2px 5px 7px 0;
+            }
+          }
           .wrap_item_content_desc {
             font-size: 16px;
-            height: 42px;
+            height: 45px;
             overflow: hidden;
             color: #3a4a5a;
           }

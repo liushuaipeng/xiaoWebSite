@@ -6,6 +6,19 @@ const Article = mongoose.model("Article");
 
 const router = new koaRouter();
 
+router.get("/api/article/list", async (ctx, next) => {
+  let list = await Article.find()
+    .sort({ "meta.updatedAt": -1 })
+    .exec();
+  ctx.body = {
+    state: 0,
+    message: "成功",
+    data:{
+      list:list
+    }
+  };
+});
+
 router.post("/api/admin/article/add", async (ctx, next) => {
   let data = ctx.request.body;
   data.author = ctx.session.user.nickname;

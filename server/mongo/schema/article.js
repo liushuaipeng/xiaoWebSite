@@ -11,6 +11,7 @@ const ArticleSchema = new mongoose.Schema({
   describe: String,
   cover: String,
   content: String,
+  weight: String, // 权重，暂无此功能
   tags: Array,
   meta: {
     createdAt: {

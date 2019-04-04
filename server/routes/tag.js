@@ -5,6 +5,19 @@ const ATag = mongoose.model("ATag");
 
 const router = new koaRouter();
 
+router.get("/api/tag/list", async (ctx, next) => {
+  let keyword = ctx.query.keyword || "";
+  let list = await ATag.getAtagKeyword(keyword);
+  ctx.body = {
+    state: 0,
+    message: "查询成功",
+    data: {
+      list: list,
+      total: list.length
+    }
+  };
+});
+
 router.get("/api/admin/tag/list", async (ctx, next) => {
   let keyword = ctx.query.keyword || "";
   let list = await ATag.getAtagKeyword(keyword);

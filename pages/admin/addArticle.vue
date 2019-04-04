@@ -83,10 +83,10 @@ export default {
 
       form: {
         state: 0,
-        title: "测试文章",
+        title: "",
         tags: [],
-        describe: "测试文章的测试描述",
-        content: "#### how to use mavonEditor in nuxt.js\n### 测试换行",
+        describe: "",
+        content: "",
         cover: ""
       }
     };
@@ -96,8 +96,10 @@ export default {
     async remoteMethod(keyword) {
       this.loadingTag = true;
       let res = await requestAdminTagList({ keyword });
-      this.tagList = res.data.list;
-      this.loadingTag = false;
+      if (res.state === 0) {
+        this.tagList = res.data.list;
+        this.loadingTag = false;
+      }
       return this.tagList;
     },
     // 提交
