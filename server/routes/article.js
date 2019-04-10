@@ -13,9 +13,20 @@ router.get("/api/article/list", async (ctx, next) => {
   ctx.body = {
     state: 0,
     message: "成功",
-    data:{
-      list:list
+    data: {
+      list: list
     }
+  };
+});
+
+// 文章详情
+router.get("/api/article/detail", async (ctx, next) => {
+  let id = ctx.query.id || "";
+  let art = await Article.getArticleById(id);
+  ctx.body = {
+    state: 0,
+    message: "成功",
+    data: art
   };
 });
 

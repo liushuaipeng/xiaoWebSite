@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server --exec babel-node",
     "build": "nuxt build",
-    "start": "cross-env NODE_ENV=production node server/index.js --exec babel-node",
+    "start": "cross-env NODE_ENV=production nodemon server/index.js --exec babel-node",
     "generate": "nuxt generate"
   },
   "config": {
@@ -23,6 +23,7 @@
     "element-ui": "^2.4.11",
     "fs": "0.0.1-security",
     "highlight.js": "^9.15.6",
+    "jquery": "^3.3.1",
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
     "koa-multer": "^1.0.2",

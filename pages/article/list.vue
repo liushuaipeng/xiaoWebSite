@@ -41,10 +41,12 @@
             <el-card shadow="hover">
               <div style="display:flex;flex-wrap:wrap;">
                 <div class="wrap_item_image"
-                  :style="{backgroundImage:'url('+article.cover+')'}">
+                  :style="{backgroundImage:'url('+article.cover+')'}"
+                  @click="linkToDetail(article.id)">
                 </div>
                 <div class="wrap_item_content">
-                  <div class="wrap_item_content_title">{{article.title}}</div>
+                  <div class="wrap_item_content_title"
+                    @click="linkToDetail(article.id)">{{article.title}}</div>
                   <div class="wrap_item_content_info">作者：<span style="color:#16a085;">{{article.author}}</span> &nbsp; 时间：{{article.meta.createdAt.substr(0,10)}}</div>
                   <div class="wrap_item_content_tag">
                     <el-tag v-for="atag in article.tags"
@@ -117,16 +119,26 @@ export default {
       let res = await requestArticleList();
       this.articlesList = res.data.list;
     },
-    maskHandle() {
-      console.log("-");
+    linkToDetail(id) {
+      this.$router.push("/article/detail/" + id);
+    },
+    setRem() {
+      var cw = document.documentElement.clientWidth;
+      if (cw < 750) {
+        document.documentElement.style.fontSize = cw / 7.5 + "px";
+      } else {
+        document.documentElement.style.fontSize = "100px";
+      }
     }
   },
   mounted() {
     this.updateBgImg();
     this.updateWindowWidth();
     this.getAllArticles();
+    // this.setRem();
     window.onresize = () => {
       this.updateWindowWidth();
+      // this.setRem();
     };
   }
 };
@@ -163,6 +175,7 @@ export default {
         padding: 0 20px;
         .tag_item {
           padding: 10px 0;
+          font-size: 16px;
           cursor: pointer;
         }
       }
@@ -199,6 +212,9 @@ export default {
             font-size: 20px;
             font-weight: 600;
             cursor: pointer;
+            &:hover {
+              text-decoration: underline;
+            }
           }
           .wrap_item_content_info {
             height: 30px;
@@ -208,6 +224,7 @@ export default {
             overflow: hidden;
           }
           .wrap_item_content_tag {
+            font-size: 16px;
             .el-tag {
               margin: 2px 5px 7px 0;
             }
@@ -242,6 +259,7 @@ export default {
       position: fixed;
       top: 10px;
       left: 10px;
+      font-size: 16px;
     }
     .wrapper {
       .tag {

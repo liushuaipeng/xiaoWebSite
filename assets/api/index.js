@@ -10,5 +10,6 @@ export const requestTagList = params => request.get(`${domin}/api/tag/list`, { p
 export const requestAdminTagAdd = params => request.post(`/api/admin/tag/add`, params).then(res => res.data);
 
 // 文章
-export const requestArticleList = params => request.get(`${domin}/api/article/list`, {params}).then(res => res.data);
+export const requestArticleList = params => request.get(`${domin}/api/article/list`, { params }).then(res => res.data);
+export const requestArticleDetail = params => request.get(`${domin}/api/article/detail`, { params }).then(res => res.data);
 export const requestAdminArticleAdd = params => request.post(`/api/admin/article/add`, params).then(res => res.data);

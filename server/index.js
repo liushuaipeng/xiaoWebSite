@@ -1,4 +1,4 @@
-import Koa from "koa";
+import Koa from "Koa";
 import consola from "consola";
 import { Nuxt, Builder } from "nuxt";
 import { resolve } from "path";

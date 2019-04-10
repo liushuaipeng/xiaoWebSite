@@ -24,10 +24,12 @@
               <el-card shadow="hover">
                 <div style="display:flex;flex-wrap:wrap;">
                   <div class="wrap_item_image"
+                    @click="linkToDetail(article.id)"
                     :style="{backgroundImage:'url('+article.cover+')'}">
                   </div>
                   <div class="wrap_item_content">
-                    <div class="wrap_item_content_title">{{article.title}}</div>
+                    <div class="wrap_item_content_title"
+                      @click="linkToDetail(article.id)">{{article.title}}</div>
                     <div class="wrap_item_content_info">作者：<span style="color:#16a085;">{{article.author}}</span> &nbsp; 时间：{{article.meta.createdAt.substr(0,10)}}</div>
                     <div class="wrap_item_content_tag">
                       <el-tag v-for="atag in article.tags"
@@ -119,6 +121,9 @@ export default {
           Math.floor(Math.random() * 9) +
           ".jpg");
       }
+    },
+    linkToDetail(id) {
+      this.$router.push("/article/detail/" + id);
     },
     setRem() {
       var cw = document.documentElement.clientWidth;
@@ -224,6 +229,9 @@ export default {
           .wrap_item_content_title {
             font-size: 20px;
             font-weight: 600;
+            &:hover {
+              text-decoration: underline;
+            }
           }
           .wrap_item_content_info {
             height: 30px;

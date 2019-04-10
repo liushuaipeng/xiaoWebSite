@@ -3,7 +3,7 @@ export const config = {
   db: "mongodb://localhost/webSite",
   production: {
     host: "liushuaipeng.cn",
-    port: "",
+    port: 1104,
     domin: "https://liushuaipeng.cn"
   },
   development: {
