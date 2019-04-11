@@ -30,7 +30,7 @@
                   <div class="wrap_item_content">
                     <div class="wrap_item_content_title"
                       @click="linkToDetail(article.id)">{{article.title}}</div>
-                    <div class="wrap_item_content_info">作者：<span style="color:#16a085;">{{article.author}}</span> &nbsp; 时间：{{article.meta.createdAt.substr(0,10)}}</div>
+                    <div class="wrap_item_content_info">作者：<span style="color:#16a085;">{{article.author}}</span> &nbsp; 时间：{{dateFormat(article.meta.updatedAt)}}</div>
                     <div class="wrap_item_content_tag">
                       <el-tag v-for="atag in article.tags"
                         :key="atag.id"
@@ -72,7 +72,7 @@
 
 <script>
 import { requestArticleList } from "~/assets/api";
-import { anchorPoint } from "../assets/js/common.js";
+import { anchorPoint, dateFormat } from "../assets/js/common.js";
 export default {
   head: {
     title: "刘帅鹏的个人网站 - Liu Shuaipeng's Personal Website",
@@ -124,6 +124,9 @@ export default {
     },
     linkToDetail(id) {
       this.$router.push("/article/detail/" + id);
+    },
+    dateFormat(date) {
+      return dateFormat(date, "yyyy-MM-dd");
     },
     setRem() {
       var cw = document.documentElement.clientWidth;
@@ -314,5 +317,11 @@ export default {
   }
 }
 </style>
+<style lang="less">
+.el-card__body {
+  width: 100%;
+}
+</style>
+
 
 

@@ -19,8 +19,8 @@ const ATagSchema = new mongoose.Schema({
 });
 
 ATagSchema.pre("save", function(next) {
-  this.id = "ATAG" + getGenerateID();
   if (this.isNew) {
+    this.id = "ATAG" + getGenerateID();
     this.meta.createdAt = this.meta.updatedAt = Date.now();
   } else {
     this.meta.updatedAt = Date.now();

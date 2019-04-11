@@ -73,7 +73,11 @@
 
 <script>
 import axios from "axios";
-import { requestAdminTagList, requestAdminArticleAdd } from "~/assets/api/";
+import {
+  requestAdminTagList,
+  requestAdminArticleAdd,
+  requestAdminArticleByids
+} from "~/assets/api/";
 export default {
   layout: "admin",
   data() {
@@ -92,6 +96,16 @@ export default {
     };
   },
   methods: {
+    // 加载文章内容
+    async getArticleDetail(id) {
+      let { data } = await requestAdminArticleByids({ id });
+      console.log(data);
+      data.tag = [];
+      data.tags.forEach(tag => {
+        data.tag.push(tag.id);
+      });
+      this.form = data;
+    },
     // 异步搜索标签
     async remoteMethod(keyword) {
       this.loadingTag = true;
@@ -151,6 +165,9 @@ export default {
   async mounted() {
     let list = await this.remoteMethod();
     this.initTagList = Object.assign([], list);
+    if (this.$route.query.id) {
+      this.getArticleDetail(this.$route.query.id);
+    }
   }
 };
 </script>

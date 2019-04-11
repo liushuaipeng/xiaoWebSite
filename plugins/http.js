@@ -1,12 +1,18 @@
 import axios from "axios";
 import { Message } from "element-ui";
+import qs from "qs";
 let service = axios.create({
   // baseURL: '', // api的base_url
   timeout: 1000 * 300, // 请求超时时间
-  // transformRequest: [function (data) {
+  // transformRequest: [
+  //   function(data) {
   //     // 做任何你想要的数据转换
   //     return qs.stringify(data);
-  //   }],
+  //   }
+  // ],
+  paramsSerializer: params => {
+    return qs.stringify(params, { indices: false });
+  },
   headers: {
     "Content-Type": "application/json; charset=utf-8"
   }

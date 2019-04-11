@@ -26,8 +26,8 @@ const ArticleSchema = new mongoose.Schema({
 });
 
 ArticleSchema.pre("save", function(next) {
-  this.id = "ARTICLE" + getGenerateID();
   if (this.isNew) {
+    this.id = "ARTICLE" + getGenerateID();
     this.meta.createdAt = this.meta.updatedAt = Date.now();
   } else {
     this.meta.updatedAt = Date.now();

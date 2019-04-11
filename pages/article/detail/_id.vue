@@ -148,7 +148,6 @@ export default {
         anchorPoint();
       });
     });
-    console.log(this.catalogList);
     this.updateBgImg();
     this.updateWindowWidth();
     this.setRem();

@@ -1,5 +1,6 @@
 import koaRouter from "koa-router";
 import mongoose from "mongoose";
+import { tagAsArticle, articleAstag } from "../mongo/methods/article";
 
 const ATag = mongoose.model("ATag");
 
@@ -47,5 +48,20 @@ router.post("/api/admin/tag/add", async (ctx, next) => {
     };
   }
 });
-
+// 取消文章与标签的关联
+router.post("/api/admin/tag/cancel", async (ctx, next) => {
+  let articleid = ctx.request.body.articleid;
+  let tagid = ctx.request.body.tagid;
+  console.log(tagid);
+  try {
+    await tagAsArticle(tagid, articleid, false);
+    await articleAstag(tagid, articleid, false);
+  } catch (error) {
+    console.log(error);
+  }
+  ctx.body = {
+    state: 0,
+    message: "取消关联成功"
+  };
+});
 module.exports = router;
