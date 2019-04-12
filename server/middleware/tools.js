@@ -18,7 +18,7 @@ export const setSession = app => {
 
   const CONFIG = {
     key: "koa:sess",
-    maxAge: 30 * 60 * 1000, // session 有效时间半小时
+    maxAge: 6 * 60 * 60 * 1000, // session 有效时间6小时
     overwrite: true,
     httpOnly: true,
     signed: true,

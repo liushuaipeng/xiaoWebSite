@@ -274,6 +274,7 @@ export default {
       font-size: 16px;
     }
     .wrapper {
+      padding: 0;
       .catalog {
         position: fixed;
         min-width: 150px;
