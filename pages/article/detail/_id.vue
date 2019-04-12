@@ -216,6 +216,7 @@ export default {
     }
     .content {
       flex: 1;
+      width: 100%;
       padding-left: 250px;
       font-size: 0.16rem;
       .content_wrap {
