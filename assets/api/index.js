@@ -1,8 +1,7 @@
 import { request } from "~/plugins/http";
 import { config } from "~/server/config";
-import qs from "qs";
 
-const domin = config[process.env.NODE_ENV].domin;
+export const domin = config[process.env.NODE_ENV].domin;
 // 登录
 export const requestAdminLogin = params => request.post(`/api/admin/login`, params).then(res => res.data);
 

@@ -36,7 +36,7 @@
           <el-form-item label="封面">
             <el-upload class="cover-uploader"
               name="files"
-              action="http://localhost:1104/api/admin/upload"
+              :action="domin+'/api/admin/upload'"
               :show-file-list="false"
               :on-success="handleCoverSuccess"
               :before-upload="beforeCoverUpload">
@@ -74,6 +74,7 @@
 <script>
 import axios from "axios";
 import {
+  domin,
   requestAdminTagList,
   requestAdminArticleAdd,
   requestAdminArticleByids
@@ -82,6 +83,7 @@ export default {
   layout: "admin",
   data() {
     return {
+      domin,
       loadingTag: false,
       tagList: [],
 
