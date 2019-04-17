@@ -52,7 +52,6 @@ router.post("/api/admin/tag/add", async (ctx, next) => {
 router.post("/api/admin/tag/cancel", async (ctx, next) => {
   let articleid = ctx.request.body.articleid;
   let tagid = ctx.request.body.tagid;
-  console.log(tagid);
   try {
     await tagAsArticle(tagid, articleid, false);
     await articleAstag(tagid, articleid, false);

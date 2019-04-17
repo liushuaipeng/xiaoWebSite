@@ -54,7 +54,8 @@
             <mavon-editor v-model="form.content"
               class="mavon_editor"
               @imgAdd="imgUploadME"
-              ref="md"></mavon-editor>
+              ref="md"
+              @change="contentChange"></mavon-editor>
           </no-ssr>
         </el-col>
         <el-col :span="24">
@@ -93,7 +94,8 @@ export default {
         tags: [],
         describe: "",
         content: "",
-        cover: ""
+        cover: "",
+        contentHtml: ""
       }
     };
   },
@@ -146,6 +148,9 @@ export default {
           }
         });
       });
+    },
+    contentChange(content, contentHtml) {
+      this.form.contentHtml = contentHtml;
     },
     handleCoverSuccess(res) {
       this.form.cover = res.data.list[0].url;

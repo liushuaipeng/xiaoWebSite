@@ -7,3 +7,4 @@ mavonEditor.markdownIt.use(require("markdown-it-github-headings"), {
   prefixHeadingIds: false
 });
 Vue.prototype.markdownIt = mavonEditor.markdownIt;
+// export default mavonEditor.markdownIt.render;

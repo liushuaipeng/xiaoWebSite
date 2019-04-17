@@ -26,7 +26,7 @@
               <div class="tag_item"
                 v-for="tag in tagList"
                 :key="tag.id">
-                <el-tag @click="handleSelect(tag.id,tag)"
+                <el-tag @click="handleSelect(tag)"
                   :type="activeMenu === tag.id?'success':'info'">{{tag.name}} （{{tag.articles.length}}）</el-tag>
               </div>
             </div>
@@ -66,8 +66,19 @@
 
 <script>
 import axios from "axios";
-import { requestTagList, requestArticleList } from "~/assets/api";
+import { requestTagList, requestArticle } from "~/assets/api";
 export default {
+  head: {
+    title: "全部文章 - 刘帅鹏的个人网站 - Liu Shuaipeng's Personal Website",
+    meta: [
+      {
+        name: "description",
+        content:
+          "刘帅鹏的个人网站，记录个人开发和学习过程中所遇到问题，以及解决方案和感悟，关注web前端、node技术。"
+      },
+      { name: "keywords", content: "刘帅鹏" }
+    ]
+  },
   async asyncData() {
     let res = await requestTagList();
     let list = [];
@@ -106,17 +117,20 @@ export default {
         this.windowWidthIsLess768 = true;
       }
     },
-    async handleSelect(id, tag) {
-      this.activeMenu = id;
-      if (this.activeMenu === "all") {
-        await this.getAllArticles();
+    async handleSelect(tag) {
+      let ids;
+      if (tag === "all") {
+        ids = "all";
+        this.activeMenu = "all";
       } else {
-        this.articlesList = tag.articles;
+        ids = tag.articles;
+        this.activeMenu = tag.id;
       }
+      await this.getArticles(ids);
       this.leftMenuShow = false;
     },
-    async getAllArticles() {
-      let res = await requestArticleList();
+    async getArticles(ids) {
+      let res = await requestArticle({ ids });
       this.articlesList = res.data.list;
     },
     linkToDetail(id) {
@@ -134,7 +148,7 @@ export default {
   mounted() {
     this.updateBgImg();
     this.updateWindowWidth();
-    this.getAllArticles();
+    this.getArticles("all");
     // this.setRem();
     window.onresize = () => {
       this.updateWindowWidth();

@@ -74,7 +74,7 @@
           </div>
           <div id="articleContent"
             class="content_body markdown-body"
-            v-html="contentHtml">
+            v-html="article.contentHtml">
 
           </div>
         </div>
@@ -88,25 +88,35 @@ import "highlight.js/lib/highlight";
 import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown.css";
 
-import { requestArticleDetail } from "~/assets/api";
+import { requestArticle } from "~/assets/api";
 import { anchorPoint, makeCatalog } from "~/assets/js/common.js";
 
 export default {
-  head: {},
   async asyncData({ route, store, error }) {
     const id = route.params.id || "index";
-    let { data } = await requestArticleDetail({ id });
+    let { data } = await requestArticle({ id });
     return { article: data };
+  },
+  head() {
+    let kws = this.article.tags.map(tag => {
+      return { name: "keywords", content: tag.name };
+    });
+    return {
+      title: this.article.title,
+      meta: [
+        {
+          name: "description",
+          content: this.article.describe
+        },
+        { name: "keywords", content: "刘帅鹏" }
+      ].concat(kws)
+    };
   },
   data() {
     return {
       windowWidthIsLess768: true,
       leftMenuShow: false,
       bg: "",
-      activeMenu: "all",
-      articlesList: [],
-      tagList: [],
-      contentHtml: "",
       catalogList: []
     };
   },
@@ -141,12 +151,10 @@ export default {
     }
   },
   mounted() {
-    this.contentHtml = this.markdownIt.render(this.article.content);
+    // 生成目录
+    this.catalogList = makeCatalog();
     this.$nextTick(function() {
-      this.catalogList = makeCatalog();
-      this.$nextTick(function() {
-        anchorPoint();
-      });
+      anchorPoint();
     });
     this.updateBgImg();
     this.updateWindowWidth();
@@ -155,11 +163,6 @@ export default {
       this.updateWindowWidth();
       this.setRem();
     };
-    // setTimeout(() => {}, 0);
-
-    // setTimeout(() => {
-
-    // }, 0);
   }
 };
 </script>
@@ -210,6 +213,9 @@ export default {
           font-size: 14px;
           color: #1a2a3a;
           text-decoration: none;
+          &:hover {
+            color: #3498db;
+          }
         }
         // overflow: hidden;
       }

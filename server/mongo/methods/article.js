@@ -17,11 +17,15 @@ export const tagAsArticle = async (tagid, artid, iscontact = true) => {
   if (iscontact) {
     // 关联
     if (index > -1) {
-      console.log(`${ATag.name}标签关联过${Article.title}此文章，请勿重复关联`);
+      console.log(`标签关联文章 - ${ATag.name}标签关联过${Article.title}此文章 - 重复关联`);
       return 1;
     }
     atag.articles.push(article.id);
   } else {
+    if (index === -1) {
+      console.log(`标签取关文章 - ${ATag.name}标签没有关联过${Article.title}此文章 - 无需取关`);
+      return 1;
+    }
     // 取消关联
     atag.articles.splice(index, 1);
   }
@@ -41,11 +45,15 @@ export const articleAstag = async (tagid, artid, iscontact = true) => {
   if (iscontact) {
     // 关联
     if (index > -1) {
-      console.log(`${Article.title}文章关联过${ATag.name}此标签，请勿重复关联`);
+      console.log(`文章关联标签 - ${ATag.name}标签关联过${Article.title}此文章 - 重复关联`);
       return 1;
     }
     article.tags.push({ id: atag.id, name: atag.name });
   } else {
+    if (index === -1) {
+      console.log(`文章取关标签 - ${ATag.name}标签没有关联过${Article.title}此文章 - 无需取关`);
+      return 1;
+    }
     // 取消关联
     article.tags.splice(index, 1);
   }

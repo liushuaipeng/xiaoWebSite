@@ -62,7 +62,7 @@
       :visible.sync="dialogAddTag">
       <el-form :model="addForm"
         ref="addForm"
-        @submit.native.prevent>
+        @submit.native.prevent="addFormSubmit">
         <el-form-item label="标签名称"
           :label-width="'120px'"
           prop="name"
@@ -112,6 +112,9 @@ export default {
                 message: res.message,
                 type: "success"
               });
+              this.dialogAddTag = false;
+              this.addForm.name = "";
+              this.getTagList();
             }
           });
         }
@@ -158,7 +161,7 @@ export default {
             showClose: true
           });
           tag.articles.splice(index, 1);
-          await this.getTagList(tag.id);
+          await this.collapseChange(tag.id);
         }
       } catch (error) {
         console.log(error);

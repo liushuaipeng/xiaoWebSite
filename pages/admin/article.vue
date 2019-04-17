@@ -55,18 +55,28 @@
         </el-table-column>
         <el-table-column label="操作"
           fixed="right"
-          width="150">
+          width="116">
           <template slot-scope="scope">
             <nuxt-link :to="'/article/detail/'+scope.row.id">
               <el-button type="info"
-                size="mini">查看
+                icon="el-icon-view"
+                size="mini"
+                circle>
               </el-button>
             </nuxt-link>
             <nuxt-link :to="'/admin/addArticle?id='+scope.row.id">
               <el-button type="primary"
-                size="mini">编辑
+                icon="el-icon-edit"
+                circle
+                size="mini">
               </el-button>
             </nuxt-link>
+            <el-button type="danger"
+              icon="el-icon-delete"
+              circle
+              size="mini"
+              @click="deleteArticleHandle(scope.row.id)">
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -78,7 +88,8 @@
 import {
   requestAdminArticleList,
   requestAdminTagAdd,
-  requestAdminTagCancel
+  requestAdminTagCancel,
+  requestAdminArticleDelete
 } from "~/assets/api/";
 import { dateFormat } from "~/assets/js/common";
 export default {
@@ -95,6 +106,23 @@ export default {
     },
     dateFormat(date) {
       return dateFormat(date);
+    },
+    async deleteArticleHandle(id) {
+      try {
+        await this.$confirm(`确定删除id为【${id}】的文章么？`, "删除文章");
+        let res = await requestAdminArticleDelete({ id });
+        console.log(res);
+        if (res.state === 0) {
+          this.$message({
+            message: res.message,
+            type: "success",
+            showClose: true
+          });
+          this.getArticleList();
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
   mounted() {

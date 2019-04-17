@@ -3,7 +3,7 @@
   <div class="admin">
     <el-container>
       <el-header height="50px">
-        <div>admin</div>
+        <div style="font-size:16px;">admin</div>
       </el-header>
       <el-container class="admin_content">
         <el-aside width="200px">

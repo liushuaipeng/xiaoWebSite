@@ -14,8 +14,10 @@ export const requestAdminTagCancel = params => request.post(`/api/admin/tag/canc
 
 
 // 文章
+export const requestArticle = params => request.get(`${domin}/api/article`, { params }).then(res => res.data);
 export const requestArticleList = params => request.get(`${domin}/api/article/list`, { params }).then(res => res.data);
 export const requestArticleDetail = params => request.get(`${domin}/api/article/detail`, { params }).then(res => res.data);
 export const requestAdminArticleList = params => request.get(`/api/admin/article/list`, { params }).then(res => res.data);
 export const requestAdminArticleByids = params => request.get(`/api/admin/article/byids`, { params }).then(res => res.data);
 export const requestAdminArticleAdd = params => request.post(`/api/admin/article/add`, params).then(res => res.data);
+export const requestAdminArticleDelete = params => request.post(`/api/admin/article/delete`, params).then(res => res.data);
