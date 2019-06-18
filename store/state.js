@@ -1,3 +1,4 @@
 export default () => ({
-  loginDialogShow: false
+  loginDialogShow: false,
+  windowWidthIsLess750: true
 });

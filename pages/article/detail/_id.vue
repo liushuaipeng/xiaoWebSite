@@ -1,60 +1,70 @@
 <template>
   <div class="article_detail"
-    :class="{'menushow':leftMenuShow}">
+    :class="{ menushow: leftMenuShow }">
     <div class="article_detail_mask"
       @click="leftMenuShow = false"
-      v-if="leftMenuShow && windowWidthIsLess768"></div>
+      v-if="leftMenuShow && windowWidthIsLess750"></div>
     <div class="article_detail_menu"
-      v-if="!leftMenuShow && windowWidthIsLess768">
+      v-if="!leftMenuShow && windowWidthIsLess750">
       <el-button type="primary"
         circle
         icon="el-icon-menu"
         @click="leftMenuShow = true"></el-button>
     </div>
     <div class="bg"
-      :style="{backgroundImage:'url('+bg+')'}"></div>
+      :style="{ backgroundImage: 'url(' + bg + ')' }"></div>
     <div class="wrapper">
       <div class="catalog"
-        :class="{'hide':!leftMenuShow}">
+        :class="{ hide: !leftMenuShow }">
         <div class="catalog_wrapper">
           <!-- 三级目录结构TODO？重构 -->
           <el-menu default-active="2"
             background-color="#ecf0f1">
-            <div v-for="(item1,index1) in catalogList"
+            <div v-for="(item1, index1) in catalogList"
               :key="index1">
               <el-submenu v-if="item1.children.length > 0"
                 :index="index1.toString()">
                 <template slot="title">
                   <a style="font-size:16px;"
-                    :href="item1.href">{{item1.text}}</a>
+                    :href="item1.href">{{
+                    item1.text
+                    }}</a>
                 </template>
-                <div v-for="(item2,index2) in item1.children"
-                  :key="index1 + '-'+ index2">
+                <div v-for="(item2, index2) in item1.children"
+                  :key="index1 + '-' + index2">
                   <el-submenu v-if="item2.children.length > 0"
-                    :index="index1 + '-'+ index2">
+                    :index="index1 + '-' + index2">
                     <template slot="title">
                       <a style="font-size:14px;"
-                        :href="item2.href">{{item2.text}}</a>
+                        :href="item2.href">{{
+                        item2.text
+                        }}</a>
                     </template>
-                    <div v-for="(item3,index3) in item2.children"
-                      :key="index1 + '-'+ index2 + '-' + index3">
-                      <el-menu-item :index="index1 + '-'+ index2 + '-' + index3">
+                    <div v-for="(item3, index3) in item2.children"
+                      :key="index1 + '-' + index2 + '-' + index3">
+                      <el-menu-item :index="index1 + '-' + index2 + '-' + index3">
                         <a style="font-size:12px;"
-                          :href="item3.href">{{item3.text}}</a>
+                          :href="item3.href">{{
+                          item3.text
+                          }}</a>
                       </el-menu-item>
                     </div>
                   </el-submenu>
                   <el-menu-item v-else
-                    :index="index1 + '-'+ index2">
+                    :index="index1 + '-' + index2">
                     <a style="font-size:14px;"
-                      :href="item2.href">{{item2.text}}</a>
+                      :href="item2.href">{{
+                      item2.text
+                      }}</a>
                   </el-menu-item>
                 </div>
               </el-submenu>
               <el-menu-item v-else
                 :index="index1.toString()">
                 <a style="font-size:16px;"
-                  :href="item1.href">{{item1.text}}</a>
+                  :href="item1.href">{{
+                  item1.text
+                  }}</a>
               </el-menu-item>
             </div>
           </el-menu>
@@ -63,20 +73,21 @@
       <div class="content">
         <div class="content_wrap">
           <div class="content_header">
-            <div class="content_header_title">{{article.title}}</div>
-            <div class="content_header_info">作者：<span style="color:#16a085;">{{article.author}}</span> &nbsp; 创建时间：{{article.meta.createdAt.substr(0,10)}}</div>
+            <div class="content_header_title">{{ article.title }}</div>
+            <div class="content_header_info">
+              作者：<span style="color:#16a085;">{{ article.author }}</span>
+              &nbsp; 创建时间：{{ article.meta.createdAt.substr(0, 10) }}
+            </div>
             <div class="content_header_tag">
               <el-tag v-for="atag in article.tags"
                 :key="atag.id"
-                size="small">{{atag.name}}
+                size="small">{{ atag.name }}
               </el-tag>
             </div>
           </div>
           <div id="articleContent"
             class="content_body markdown-body"
-            v-html="article.contentHtml">
-
-          </div>
+            v-html="article.contentHtml"></div>
         </div>
       </div>
     </div>
@@ -88,6 +99,7 @@ import "highlight.js/lib/highlight";
 import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown.css";
 
+import { mapState } from "vuex";
 import { requestArticle } from "~/assets/api";
 import { anchorPoint, makeCatalog } from "~/assets/js/common.js";
 
@@ -114,11 +126,13 @@ export default {
   },
   data() {
     return {
-      windowWidthIsLess768: true,
       leftMenuShow: false,
       bg: "",
       catalogList: []
     };
+  },
+  computed: {
+    ...mapState(["windowWidthIsLess750"])
   },
   methods: {
     updateBgImg() {
@@ -132,23 +146,8 @@ export default {
           ".jpg");
       }
     },
-    updateWindowWidth() {
-      if (document.documentElement.clientWidth > 768) {
-        this.windowWidthIsLess768 = false;
-      } else {
-        this.windowWidthIsLess768 = true;
-      }
-    },
-    async handleSelect(id, tag) {},
 
-    setRem() {
-      var cw = document.documentElement.clientWidth;
-      if (cw < 750) {
-        document.documentElement.style.fontSize = cw / 7.5 + "px";
-      } else {
-        document.documentElement.style.fontSize = "100px";
-      }
-    }
+    async handleSelect(id, tag) {}
   },
   mounted() {
     // 生成目录
@@ -157,12 +156,6 @@ export default {
       anchorPoint();
     });
     this.updateBgImg();
-    this.updateWindowWidth();
-    this.setRem();
-    window.onresize = () => {
-      this.updateWindowWidth();
-      this.setRem();
-    };
   }
 };
 </script>

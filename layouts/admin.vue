@@ -1,5 +1,4 @@
 <template>
-
   <div class="admin">
     <el-container>
       <el-header height="50px">
@@ -28,6 +27,9 @@ export default {
   components: {
     adminAside,
     adminLogin
+  },
+  mounted() {
+    document.documentElement.style.fontSize = "16px";
   }
 };
 </script>

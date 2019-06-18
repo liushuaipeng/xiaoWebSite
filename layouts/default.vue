@@ -3,6 +3,38 @@
     <nuxt />
   </div>
 </template>
+<script>
+export default {
+  mounted() {
+    this.onWidthChange();
+    window.onresize = () => {
+      this.onWidthChange();
+    };
+  },
+  methods: {
+    onWidthChange() {
+      var cw = document.documentElement.clientWidth;
+      if (cw < 750) {
+        document.documentElement.style.fontSize = cw / 7.5 + "px";
+        this.windowWidthIsLess750 = true;
+      } else {
+        document.documentElement.style.fontSize = "100px";
+        this.windowWidthIsLess750 = false;
+      }
+    }
+  },
+  computed: {
+    windowWidthIsLess750: {
+      get() {
+        return this.$store.state.windowWidthIsLess750;
+      },
+      set(val) {
+        this.$store.commit("updatewindowWidthIsLess750", val);
+      }
+    }
+  }
+};
+</script>
 
 <style>
 html {

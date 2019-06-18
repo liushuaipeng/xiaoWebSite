@@ -1,33 +1,33 @@
 <template>
   <div class="article_list"
-    :class="{'menushow':leftMenuShow}">
+    :class="{ menushow: leftMenuShow }">
     <div class="article_list_mask"
       @click="leftMenuShow = false"
-      v-if="leftMenuShow && windowWidthIsLess768"></div>
+      v-if="leftMenuShow && windowWidthIsLess750"></div>
     <div class="article_list_menu"
-      v-if="!leftMenuShow && windowWidthIsLess768">
+      v-if="!leftMenuShow && windowWidthIsLess750">
       <el-button type="primary"
         circle
         icon="el-icon-menu"
         @click="leftMenuShow = true"></el-button>
     </div>
     <div class="bg"
-      :style="{backgroundImage:'url('+bg+')'}"></div>
+      :style="{ backgroundImage: 'url(' + bg + ')' }"></div>
     <div class="wrapper">
       <div class="tag"
-        :class="{'hide':!leftMenuShow}">
+        :class="{ hide: !leftMenuShow }">
         <div>
           <el-card>
             <div class="tag_list">
               <div class="tag_item">
                 <el-tag @click="handleSelect('all')"
-                  :type="activeMenu === 'all'?'success':'info'">ALL</el-tag>
+                  :type="activeMenu === 'all' ? 'success' : 'info'">ALL</el-tag>
               </div>
               <div class="tag_item"
                 v-for="tag in tagList"
                 :key="tag.id">
                 <el-tag @click="handleSelect(tag)"
-                  :type="activeMenu === tag.id?'success':'info'">{{tag.name}} （{{tag.articles.length}}）</el-tag>
+                  :type="activeMenu === tag.id ? 'success' : 'info'">{{ tag.name }} （{{ tag.articles.length }}）</el-tag>
               </div>
             </div>
           </el-card>
@@ -41,19 +41,26 @@
             <el-card shadow="hover">
               <div style="display:flex;flex-wrap:wrap;">
                 <div class="wrap_item_image"
-                  :style="{backgroundImage:'url('+article.cover+')'}"
-                  @click="linkToDetail(article.id)">
-                </div>
+                  :style="{ backgroundImage: 'url(' + article.cover + ')' }"
+                  @click="linkToDetail(article.id)"></div>
                 <div class="wrap_item_content">
                   <div class="wrap_item_content_title"
-                    @click="linkToDetail(article.id)">{{article.title}}</div>
-                  <div class="wrap_item_content_info">作者：<span style="color:#16a085;">{{article.author}}</span> &nbsp; 时间：{{article.meta.createdAt.substr(0,10)}}</div>
+                    @click="linkToDetail(article.id)">
+                    {{ article.title }}
+                  </div>
+                  <div class="wrap_item_content_info">
+                    作者：<span style="color:#16a085;">
+                      {{ article.author }}</span>
+                    &nbsp; 时间：{{ article.meta.createdAt.substr(0, 10) }}
+                  </div>
                   <div class="wrap_item_content_tag">
                     <el-tag v-for="atag in article.tags"
                       :key="atag.id"
-                      size="small">{{atag.name}}</el-tag>
+                      size="small">{{ atag.name }}</el-tag>
                   </div>
-                  <div class="wrap_item_content_desc">{{article.describe}}</div>
+                  <div class="wrap_item_content_desc">
+                    {{ article.describe }}
+                  </div>
                 </div>
               </div>
             </el-card>
@@ -65,6 +72,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import axios from "axios";
 import { requestTagList, requestArticle } from "~/assets/api";
 export default {
@@ -91,12 +99,14 @@ export default {
   },
   data() {
     return {
-      windowWidthIsLess768: true,
       leftMenuShow: false,
       bg: "",
       activeMenu: "all",
       articlesList: []
     };
+  },
+  computed: {
+    ...mapState(["windowWidthIsLess750"])
   },
   methods: {
     updateBgImg() {
@@ -108,13 +118,6 @@ export default {
         this.bg = require("~/assets/images/bg_col" +
           Math.floor(Math.random() * 8) +
           ".jpg");
-      }
-    },
-    updateWindowWidth() {
-      if (document.documentElement.clientWidth > 768) {
-        this.windowWidthIsLess768 = false;
-      } else {
-        this.windowWidthIsLess768 = true;
       }
     },
     async handleSelect(tag) {
@@ -135,25 +138,11 @@ export default {
     },
     linkToDetail(id) {
       this.$router.push("/article/detail/" + id);
-    },
-    setRem() {
-      var cw = document.documentElement.clientWidth;
-      if (cw < 750) {
-        document.documentElement.style.fontSize = cw / 7.5 + "px";
-      } else {
-        document.documentElement.style.fontSize = "100px";
-      }
     }
   },
   mounted() {
     this.updateBgImg();
-    this.updateWindowWidth();
     this.getArticles("all");
-    // this.setRem();
-    window.onresize = () => {
-      this.updateWindowWidth();
-      // this.setRem();
-    };
   }
 };
 </script>

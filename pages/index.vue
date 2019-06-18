@@ -1,10 +1,10 @@
 <template>
   <div class="home">
     <div class="bg"
-      :style="{backgroundImage:'url('+homeBg+')'}"></div>
+      :style="{ backgroundImage: 'url(' + homeBg + ')' }"></div>
     <div class="wrapper">
       <div class="wrap_header"
-        :style="{backgroundImage:'url('+goBg+')'}">
+        :style="{ backgroundImage: 'url(' + goBg + ')' }">
         <!-- <img src="~assets/images/bg1.png" alt=""> -->
         <div class="title">刘帅鹏的个人网站</div>
         <div class="title">Liu Shuaipeng's Personal Website</div>
@@ -25,19 +25,21 @@
                 <div style="display:flex;flex-wrap:wrap;">
                   <div class="wrap_item_image"
                     @click="linkToDetail(article.id)"
-                    :style="{backgroundImage:'url('+article.cover+')'}">
-                  </div>
+                    :style="{ backgroundImage: 'url(' + article.cover + ')' }"></div>
                   <div class="wrap_item_content">
                     <div class="wrap_item_content_title"
-                      @click="linkToDetail(article.id)">{{article.title}}</div>
-                    <div class="wrap_item_content_info">作者：<span style="color:#16a085;">{{article.author}}</span> &nbsp; 时间：{{dateFormat(article.meta.updatedAt)}}</div>
+                      @click="linkToDetail(article.id)">{{ article.title }}</div>
+                    <div class="wrap_item_content_info">
+                      作者：
+                      <span style="color:#16a085;">{{article.author}}</span>
+                      &nbsp; 时间：{{ dateFormat(article.meta.updatedAt) }}
+                    </div>
                     <div class="wrap_item_content_tag">
                       <el-tag v-for="atag in article.tags"
                         :key="atag.id"
-                        size="small">{{atag.name}}
-                      </el-tag>
+                        size="small">{{ atag.name }}</el-tag>
                     </div>
-                    <div class="wrap_item_content_desc">{{article.describe}}</div>
+                    <div class="wrap_item_content_desc">{{ article.describe }}</div>
                   </div>
                 </div>
               </el-card>
@@ -55,7 +57,7 @@
         <el-row>
           <el-col :span="24">
             <div class="wrap_footer">
-              <span class="">豫ICP备17049671号</span>
+              <span class>豫ICP备17049671号</span>
               <a href="mailto:shuaipengliu@foxmail.com"
                 target="_blank">shuaipengliu@foxmail.com</a>
               <a href="https://github.com/liushuaipeng"
@@ -63,9 +65,7 @@
             </div>
           </el-col>
         </el-row>
-
       </div>
-
     </div>
   </div>
 </template>
@@ -98,11 +98,7 @@ export default {
   },
   mounted() {
     this.updateBgImg();
-    this.setRem();
     anchorPoint();
-    window.onresize = () => {
-      this.setRem();
-    };
   },
   methods: {
     updateBgImg() {
@@ -127,14 +123,6 @@ export default {
     },
     dateFormat(date) {
       return dateFormat(date, "yyyy-MM-dd");
-    },
-    setRem() {
-      var cw = document.documentElement.clientWidth;
-      if (cw < 750) {
-        document.documentElement.style.fontSize = cw / 7.5 + "px";
-      } else {
-        document.documentElement.style.fontSize = "100px";
-      }
     }
   }
 };
