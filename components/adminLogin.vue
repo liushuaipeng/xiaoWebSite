@@ -34,6 +34,7 @@ export default {
       }
     };
   },
+  inject: ["reload"],
   computed: {
     loginDialogShow: {
       get() {
@@ -55,6 +56,7 @@ export default {
           showClose: true
         });
         this.loginDialogShow = false;
+        this.reload();
       }
     }
   }

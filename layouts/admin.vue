@@ -1,5 +1,6 @@
 <template>
-  <div class="admin">
+  <div class="admin"
+    v-if="triggerReload">
     <el-container>
       <el-header height="50px">
         <div style="font-size:16px;">admin</div>
@@ -27,6 +28,24 @@ export default {
   components: {
     adminAside,
     adminLogin
+  },
+  data() {
+    return {
+      triggerReload: true
+    };
+  },
+  provide() {
+    return {
+      reload: this.reload
+    };
+  },
+  methods: {
+    reload() {
+      this.triggerReload = false;
+      this.$nextTick(() => {
+        this.triggerReload = true;
+      });
+    }
   },
   mounted() {
     document.documentElement.style.fontSize = "16px";
