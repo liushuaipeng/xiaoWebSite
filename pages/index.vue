@@ -210,7 +210,7 @@ export default {
           min-width: 150px;
           min-height: 100px;
           background-image: url("~assets/images/col3.jpg");
-          background-size: cover;
+          background-size: contain;
           background-position: center center;
           background-repeat: no-repeat;
         }
@@ -220,6 +220,9 @@ export default {
           .wrap_item_content_title {
             font-size: 20px;
             font-weight: 600;
+            line-height: 30px;
+            height: 30px;
+            overflow: hidden;
             &:hover {
               text-decoration: underline;
             }
@@ -232,6 +235,8 @@ export default {
             overflow: hidden;
           }
           .wrap_item_content_tag {
+            height: 36px;
+            overflow: hidden;
             .el-tag {
               margin: 2px 5px 7px 0;
             }
