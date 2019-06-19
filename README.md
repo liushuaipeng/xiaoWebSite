@@ -19,4 +19,7 @@ $ npm start
 $ npm run generate
 ```
 
+``` javascript
+// 哈哈哈
+```
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
