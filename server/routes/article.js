@@ -15,7 +15,7 @@ router.get("/api/article", async (ctx, next) => {
   if (ids !== "all") {
     search.id = { $in: ids };
   }
-  let list = await Article.find(search)
+  let list = await Article.find(search, { _id: 0, __v: 0 })
     .sort({ "meta.updatedAt": -1 })
     .exec();
   ctx.body = {
@@ -43,16 +43,6 @@ router.get("/api/article/list", async (ctx, next) => {
     }
   };
 });
-// 文章详情
-router.get("/api/article/detail", async (ctx, next) => {
-  let id = ctx.query.id || "";
-  let art = await Article.getArticleById(id);
-  ctx.body = {
-    state: 0,
-    message: "成功",
-    data: art
-  };
-});
 
 // 文章列表接口 直接keyword关键字搜索
 router.get("/api/admin/article/list", async (ctx, next) => {
@@ -71,7 +61,7 @@ router.get("/api/admin/article/byids", async (ctx, next) => {
   let id = ctx.query.id;
   // 同时传ids和id时以id为准
   let ids = id || ctx.query.ids;
-  let list = await Article.find({ id: { $in: ids } }).exec();
+  let list = await Article.find({ id: { $in: ids } }, { _id: 0, __v: 0 }).exec();
   ctx.body = {
     state: 0,
     message: "成功",
