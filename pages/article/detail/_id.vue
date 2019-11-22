@@ -1,70 +1,74 @@
 <template>
-  <div class="article_detail"
-    :class="{ menushow: leftMenuShow }">
-    <div class="article_detail_mask"
+  <div class="article_detail" :class="{ menushow: leftMenuShow }">
+    <div
+      class="article_detail_mask"
       @click="leftMenuShow = false"
-      v-if="leftMenuShow && windowWidthIsLess750"></div>
-    <div class="article_detail_menu"
-      v-if="!leftMenuShow && windowWidthIsLess750">
-      <el-button type="primary"
+      v-if="leftMenuShow && windowWidthIsLess750"
+    ></div>
+    <div
+      class="article_detail_menu"
+      v-if="!leftMenuShow && windowWidthIsLess750"
+    >
+      <el-button
+        type="primary"
         circle
         icon="el-icon-menu"
-        @click="leftMenuShow = true"></el-button>
+        @click="leftMenuShow = true"
+      ></el-button>
     </div>
-    <div class="bg"
-      :style="{ backgroundImage: 'url(' + bg + ')' }"></div>
+    <div class="bg" :style="{ backgroundImage: 'url(' + bg + ')' }"></div>
     <div class="wrapper">
-      <div class="catalog"
-        :class="{ hide: !leftMenuShow }">
+      <div class="catalog" :class="{ hide: !leftMenuShow }">
         <div class="catalog_wrapper">
           <!-- 三级目录结构TODO？重构 -->
-          <el-menu default-active="2"
-            background-color="#ecf0f1">
-            <div v-for="(item1, index1) in catalogList"
-              :key="index1">
-              <el-submenu v-if="item1.children.length > 0"
-                :index="index1.toString()">
+          <el-menu default-active="2" background-color="#ecf0f1">
+            <div v-for="(item1, index1) in catalogList" :key="index1">
+              <el-submenu
+                v-if="item1.children.length > 0"
+                :index="index1.toString()"
+              >
                 <template slot="title">
-                  <a style="font-size:16px;"
-                    :href="item1.href">{{
+                  <a style="font-size:16px;" :href="item1.href">{{
                     item1.text
-                    }}</a>
+                  }}</a>
                 </template>
-                <div v-for="(item2, index2) in item1.children"
-                  :key="index1 + '-' + index2">
-                  <el-submenu v-if="item2.children.length > 0"
-                    :index="index1 + '-' + index2">
+                <div
+                  v-for="(item2, index2) in item1.children"
+                  :key="index1 + '-' + index2"
+                >
+                  <el-submenu
+                    v-if="item2.children.length > 0"
+                    :index="index1 + '-' + index2"
+                  >
                     <template slot="title">
-                      <a style="font-size:14px;"
-                        :href="item2.href">{{
+                      <a style="font-size:14px;" :href="item2.href">{{
                         item2.text
-                        }}</a>
+                      }}</a>
                     </template>
-                    <div v-for="(item3, index3) in item2.children"
-                      :key="index1 + '-' + index2 + '-' + index3">
-                      <el-menu-item :index="index1 + '-' + index2 + '-' + index3">
-                        <a style="font-size:12px;"
-                          :href="item3.href">{{
+                    <div
+                      v-for="(item3, index3) in item2.children"
+                      :key="index1 + '-' + index2 + '-' + index3"
+                    >
+                      <el-menu-item
+                        :index="index1 + '-' + index2 + '-' + index3"
+                      >
+                        <a style="font-size:12px;" :href="item3.href">{{
                           item3.text
-                          }}</a>
+                        }}</a>
                       </el-menu-item>
                     </div>
                   </el-submenu>
-                  <el-menu-item v-else
-                    :index="index1 + '-' + index2">
-                    <a style="font-size:14px;"
-                      :href="item2.href">{{
+                  <el-menu-item v-else :index="index1 + '-' + index2">
+                    <a style="font-size:14px;" :href="item2.href">{{
                       item2.text
-                      }}</a>
+                    }}</a>
                   </el-menu-item>
                 </div>
               </el-submenu>
-              <el-menu-item v-else
-                :index="index1.toString()">
-                <a style="font-size:16px;"
-                  :href="item1.href">{{
+              <el-menu-item v-else :index="index1.toString()">
+                <a style="font-size:16px;" :href="item1.href">{{
                   item1.text
-                  }}</a>
+                }}</a>
               </el-menu-item>
             </div>
           </el-menu>
@@ -79,15 +83,16 @@
               &nbsp; 创建时间：{{ article.meta.createdAt.substr(0, 10) }}
             </div>
             <div class="content_header_tag">
-              <el-tag v-for="atag in article.tags"
-                :key="atag.id"
-                size="small">{{ atag.name }}
+              <el-tag v-for="atag in article.tags" :key="atag.id" size="small"
+                >{{ atag.name }}
               </el-tag>
             </div>
           </div>
-          <div id="articleContent"
+          <div
+            id="articleContent"
             class="content_body markdown-body"
-            v-html="article.contentHtml"></div>
+            v-html="article.contentHtml"
+          ></div>
         </div>
       </div>
     </div>
@@ -102,6 +107,7 @@ import "github-markdown-css/github-markdown.css";
 import { mapState } from "vuex";
 import { requestArticle } from "~/assets/api";
 import { anchorPoint, makeCatalog } from "~/assets/js/common.js";
+import { imgBase } from "~/assets/js/setting";
 
 export default {
   async asyncData({ route, store, error }) {
@@ -137,13 +143,9 @@ export default {
   methods: {
     updateBgImg() {
       if (document.documentElement.clientWidth > 768) {
-        this.bg = require("~/assets/images/bg_row" +
-          Math.floor(Math.random() * 17) +
-          ".jpg");
+        this.bg = `${imgBase}bg_row${Math.floor(Math.random() * 17)}.jpg`;
       } else {
-        this.bg = require("~/assets/images/bg_col" +
-          Math.floor(Math.random() * 8) +
-          ".jpg");
+        this.bg = `${imgBase}bg_col${Math.floor(Math.random() * 8)}.jpg`;
       }
     },
 

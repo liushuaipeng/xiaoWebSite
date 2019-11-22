@@ -1,45 +1,57 @@
 <template>
   <div class="home">
-    <div class="bg"
-      :style="{ backgroundImage: 'url(' + homeBg + ')' }"></div>
+    <div class="bg" :style="{ backgroundImage: 'url(' + homeBg + ')' }"></div>
     <div class="wrapper">
-      <div class="wrap_header"
-        :style="{ backgroundImage: 'url(' + goBg + ')' }">
+      <div
+        class="wrap_header"
+        :style="{ backgroundImage: 'url(' + goBg + ')' }"
+      >
         <!-- <img src="~assets/images/bg1.png" alt=""> -->
         <div class="title">刘帅鹏的个人网站</div>
         <div class="title">Liu Shuaipeng's Personal Website</div>
-        <a id="welcome"
-          href="#content">
+        <a id="welcome" href="#content">
           <i class="el-icon-arrow-down"></i>
         </a>
       </div>
-      <div class="wrap_main"
-        id="content">
+      <div class="wrap_main" id="content">
         <el-row>
-          <el-col :span="12"
+          <el-col
+            :span="12"
             :xs="24"
             v-for="article in articleList"
-            :key="article.id">
+            :key="article.id"
+          >
             <div class="wrap_item">
               <el-card shadow="hover">
                 <div style="display:flex;flex-wrap:wrap;">
-                  <div class="wrap_item_image"
+                  <div
+                    class="wrap_item_image"
                     @click="linkToDetail(article.id)"
-                    :style="{ backgroundImage: 'url(' + article.cover + ')' }"></div>
+                    :style="{ backgroundImage: 'url(' + article.cover + ')' }"
+                  ></div>
                   <div class="wrap_item_content">
-                    <div class="wrap_item_content_title"
-                      @click="linkToDetail(article.id)">{{ article.title }}</div>
+                    <div
+                      class="wrap_item_content_title"
+                      @click="linkToDetail(article.id)"
+                    >
+                      {{ article.title }}
+                    </div>
                     <div class="wrap_item_content_info">
                       作者：
-                      <span style="color:#16a085;">{{article.author}}</span>
+                      <span style="color:#16a085;">{{ article.author }}</span>
                       &nbsp; 时间：{{ dateFormat(article.meta.updatedAt) }}
                     </div>
                     <div class="wrap_item_content_tag">
-                      <el-tag v-for="atag in article.tags"
+                      <el-tag
+                        v-for="atag in article.tags"
                         :key="atag.id"
-                        size="small">{{ atag.name }}</el-tag>
+                        size="small"
+                        >{{ atag.name }}</el-tag
+                      >
                     </div>
-                    <div class="wrap_item_content_desc">{{ article.describe }}</div>
+                    <div class="wrap_item_content_desc">
+                      {{ article.describe }}
+                    </div>
                   </div>
                 </div>
               </el-card>
@@ -58,10 +70,12 @@
           <el-col :span="24">
             <div class="wrap_footer">
               <span class>豫ICP备17049671号</span>
-              <a href="mailto:shuaipengliu@foxmail.com"
-                target="_blank">shuaipengliu@foxmail.com</a>
-              <a href="https://github.com/liushuaipeng"
-                target="_blank">github</a>
+              <a href="mailto:shuaipengliu@foxmail.com" target="_blank"
+                >shuaipengliu@foxmail.com</a
+              >
+              <a href="https://github.com/liushuaipeng" target="_blank"
+                >github</a
+              >
             </div>
           </el-col>
         </el-row>
@@ -72,7 +86,8 @@
 
 <script>
 import { requestArticleList } from "~/assets/api";
-import { anchorPoint, dateFormat } from "../assets/js/common.js";
+import { anchorPoint, dateFormat } from "~/assets/js/common.js";
+import { imgBase } from "~/assets/js/setting";
 export default {
   head: {
     title: "刘帅鹏的个人网站 - Liu Shuaipeng's Personal Website",
@@ -103,19 +118,11 @@ export default {
   methods: {
     updateBgImg() {
       if (document.documentElement.clientWidth > 768) {
-        this.homeBg = require("../assets/images/bg_row" +
-          Math.floor(Math.random() * 17) +
-          ".jpg");
-        this.goBg = require("../assets/images/row" +
-          Math.floor(Math.random() * 6) +
-          ".jpg");
+        this.homeBg = `${imgBase}bg_row${Math.floor(Math.random() * 17)}.jpg`;
+        this.goBg = `${imgBase}row${Math.floor(Math.random() * 6)}.jpg`;
       } else {
-        this.homeBg = require("../assets/images/bg_col" +
-          Math.floor(Math.random() * 8) +
-          ".jpg");
-        this.goBg = require("../assets/images/col" +
-          Math.floor(Math.random() * 9) +
-          ".jpg");
+        this.homeBg = `${imgBase}bg_col${Math.floor(Math.random() * 8)}.jpg`;
+        this.goBg = `${imgBase}col${Math.floor(Math.random() * 9)}.jpg`;
       }
     },
     linkToDetail(id) {

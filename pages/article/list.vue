@@ -1,33 +1,37 @@
 <template>
-  <div class="article_list"
-    :class="{ menushow: leftMenuShow }">
-    <div class="article_list_mask"
+  <div class="article_list" :class="{ menushow: leftMenuShow }">
+    <div
+      class="article_list_mask"
       @click="leftMenuShow = false"
-      v-if="leftMenuShow && windowWidthIsLess750"></div>
-    <div class="article_list_menu"
-      v-if="!leftMenuShow && windowWidthIsLess750">
-      <el-button type="primary"
+      v-if="leftMenuShow && windowWidthIsLess750"
+    ></div>
+    <div class="article_list_menu" v-if="!leftMenuShow && windowWidthIsLess750">
+      <el-button
+        type="primary"
         circle
         icon="el-icon-menu"
-        @click="leftMenuShow = true"></el-button>
+        @click="leftMenuShow = true"
+      ></el-button>
     </div>
-    <div class="bg"
-      :style="{ backgroundImage: 'url(' + bg + ')' }"></div>
+    <div class="bg" :style="{ backgroundImage: 'url(' + bg + ')' }"></div>
     <div class="wrapper">
-      <div class="tag"
-        :class="{ hide: !leftMenuShow }">
+      <div class="tag" :class="{ hide: !leftMenuShow }">
         <div>
           <el-card>
             <div class="tag_list">
               <div class="tag_item">
-                <el-tag @click="handleSelect('all')"
-                  :type="activeMenu === 'all' ? 'success' : 'info'">ALL</el-tag>
+                <el-tag
+                  @click="handleSelect('all')"
+                  :type="activeMenu === 'all' ? 'success' : 'info'"
+                  >ALL</el-tag
+                >
               </div>
-              <div class="tag_item"
-                v-for="tag in tagList"
-                :key="tag.id">
-                <el-tag @click="handleSelect(tag)"
-                  :type="activeMenu === tag.id ? 'success' : 'info'">{{ tag.name }} （{{ tag.articles.length }}）</el-tag>
+              <div class="tag_item" v-for="tag in tagList" :key="tag.id">
+                <el-tag
+                  @click="handleSelect(tag)"
+                  :type="activeMenu === tag.id ? 'success' : 'info'"
+                  >{{ tag.name }} （{{ tag.articles.length }}）</el-tag
+                >
               </div>
             </div>
           </el-card>
@@ -35,28 +39,38 @@
       </div>
       <div class="content">
         <div class="list">
-          <div class="wrap_item"
+          <div
+            class="wrap_item"
             v-for="article in articlesList"
-            :key="article.id">
+            :key="article.id"
+          >
             <el-card shadow="hover">
               <div style="display:flex;flex-wrap:wrap;">
-                <div class="wrap_item_image"
+                <div
+                  class="wrap_item_image"
                   :style="{ backgroundImage: 'url(' + article.cover + ')' }"
-                  @click="linkToDetail(article.id)"></div>
+                  @click="linkToDetail(article.id)"
+                ></div>
                 <div class="wrap_item_content">
-                  <div class="wrap_item_content_title"
-                    @click="linkToDetail(article.id)">
+                  <div
+                    class="wrap_item_content_title"
+                    @click="linkToDetail(article.id)"
+                  >
                     {{ article.title }}
                   </div>
                   <div class="wrap_item_content_info">
                     作者：<span style="color:#16a085;">
-                      {{ article.author }}</span>
+                      {{ article.author }}</span
+                    >
                     &nbsp; 时间：{{ article.meta.createdAt.substr(0, 10) }}
                   </div>
                   <div class="wrap_item_content_tag">
-                    <el-tag v-for="atag in article.tags"
+                    <el-tag
+                      v-for="atag in article.tags"
                       :key="atag.id"
-                      size="small">{{ atag.name }}</el-tag>
+                      size="small"
+                      >{{ atag.name }}</el-tag
+                    >
                   </div>
                   <div class="wrap_item_content_desc">
                     {{ article.describe }}
@@ -73,8 +87,8 @@
 
 <script>
 import { mapState } from "vuex";
-import axios from "axios";
 import { requestTagList, requestArticle } from "~/assets/api";
+import { imgBase } from "~/assets/js/setting";
 export default {
   head: {
     title: "全部文章 - 刘帅鹏的个人网站 - Liu Shuaipeng's Personal Website",
@@ -111,13 +125,9 @@ export default {
   methods: {
     updateBgImg() {
       if (document.documentElement.clientWidth > 768) {
-        this.bg = require("~/assets/images/bg_row" +
-          Math.floor(Math.random() * 17) +
-          ".jpg");
+        this.bg = `${imgBase}bg_row${Math.floor(Math.random() * 17)}.jpg`;
       } else {
-        this.bg = require("~/assets/images/bg_col" +
-          Math.floor(Math.random() * 8) +
-          ".jpg");
+        this.bg = `${imgBase}bg_col${Math.floor(Math.random() * 8)}.jpg`;
       }
     },
     async handleSelect(tag) {
