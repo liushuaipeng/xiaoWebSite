@@ -23,15 +23,16 @@
                 <el-tag
                   @click="handleSelect('all')"
                   :type="activeMenu === 'all' ? 'success' : 'info'"
-                  >ALL</el-tag
                 >
+                  ALL
+                </el-tag>
               </div>
               <div class="tag_item" v-for="tag in tagList" :key="tag.id">
                 <el-tag
                   @click="handleSelect(tag)"
                   :type="activeMenu === tag.id ? 'success' : 'info'"
-                  >{{ tag.name }} （{{ tag.articles.length }}）</el-tag
-                >
+                  >{{ tag.name }} （{{ tag.articles.length }}）
+                </el-tag>
               </div>
             </div>
           </el-card>
@@ -44,40 +45,7 @@
             v-for="article in articlesList"
             :key="article.id"
           >
-            <el-card shadow="hover">
-              <div style="display:flex;flex-wrap:wrap;">
-                <div
-                  class="wrap_item_image"
-                  :style="{ backgroundImage: 'url(' + article.cover + ')' }"
-                  @click="linkToDetail(article.id)"
-                ></div>
-                <div class="wrap_item_content">
-                  <div
-                    class="wrap_item_content_title"
-                    @click="linkToDetail(article.id)"
-                  >
-                    {{ article.title }}
-                  </div>
-                  <div class="wrap_item_content_info">
-                    作者：<span style="color:#16a085;">
-                      {{ article.author }}</span
-                    >
-                    &nbsp; 时间：{{ article.meta.createdAt.substr(0, 10) }}
-                  </div>
-                  <div class="wrap_item_content_tag">
-                    <el-tag
-                      v-for="atag in article.tags"
-                      :key="atag.id"
-                      size="small"
-                      >{{ atag.name }}</el-tag
-                    >
-                  </div>
-                  <div class="wrap_item_content_desc">
-                    {{ article.describe }}
-                  </div>
-                </div>
-              </div>
-            </el-card>
+            <article-item :article="article"></article-item>
           </div>
         </div>
       </div>
@@ -89,6 +57,8 @@
 import { mapState } from "vuex";
 import { requestTagList, requestArticle } from "~/assets/api";
 import { imgBase } from "~/assets/js/setting";
+import articleItem from "~/components/articleItem.vue";
+
 export default {
   head: {
     title: "全部文章 - 刘帅鹏的个人网站 - Liu Shuaipeng's Personal Website",
@@ -110,6 +80,9 @@ export default {
       }
     });
     return { tagList: list };
+  },
+  components: {
+    articleItem
   },
   data() {
     return {
@@ -145,9 +118,6 @@ export default {
     async getArticles(ids) {
       let res = await requestArticle({ ids });
       this.articlesList = res.data.list;
-    },
-    linkToDetail(id) {
-      this.$router.push("/article/detail/" + id);
     }
   },
   mounted() {
@@ -198,57 +168,6 @@ export default {
       padding-left: 50px;
       .wrap_item {
         margin-bottom: 50px;
-        .el-card {
-          display: flex;
-          background-color: rgba(236, 240, 241, 0.8);
-          border-color: #7f8c8d;
-          color: #1a2a3a;
-          &.is-hover-shadow:hover {
-            box-shadow: 0 3px 12px 3px #333;
-          }
-        }
-        .wrap_item_image {
-          flex: 0 0 15vw;
-          width: 15vw;
-          min-width: 130px;
-          min-height: 100px;
-          background-image: url("~assets/images/col3.jpg");
-          background-size: cover;
-          background-position: center center;
-          background-repeat: no-repeat;
-          cursor: pointer;
-        }
-        .wrap_item_content {
-          flex: 1;
-          margin-left: 2vw;
-          .wrap_item_content_title {
-            font-size: 20px;
-            font-weight: 600;
-            cursor: pointer;
-            &:hover {
-              text-decoration: underline;
-            }
-          }
-          .wrap_item_content_info {
-            height: 30px;
-            font-size: 15px;
-            color: #2a3a4a;
-            line-height: 30px;
-            overflow: hidden;
-          }
-          .wrap_item_content_tag {
-            font-size: 16px;
-            .el-tag {
-              margin: 2px 5px 7px 0;
-            }
-          }
-          .wrap_item_content_desc {
-            font-size: 16px;
-            height: 45px;
-            overflow: hidden;
-            color: #3a4a5a;
-          }
-        }
       }
     }
   }
@@ -304,17 +223,6 @@ export default {
       .content {
         padding: 3vw;
         z-index: 1;
-
-        .wrap_item {
-          .wrap_item_content {
-            margin-top: 10px;
-            margin-left: 0;
-          }
-          .wrap_item_image {
-            flex: 0 0 100%;
-            min-height: 150px;
-          }
-        }
       }
     }
   }

@@ -21,40 +21,8 @@
             v-for="article in articleList"
             :key="article.id"
           >
-            <div class="wrap_item">
-              <el-card shadow="hover">
-                <div style="display:flex;flex-wrap:wrap;">
-                  <div
-                    class="wrap_item_image"
-                    @click="linkToDetail(article.id)"
-                    :style="{ backgroundImage: 'url(' + article.cover + ')' }"
-                  ></div>
-                  <div class="wrap_item_content">
-                    <div
-                      class="wrap_item_content_title"
-                      @click="linkToDetail(article.id)"
-                    >
-                      {{ article.title }}
-                    </div>
-                    <div class="wrap_item_content_info">
-                      作者：
-                      <span style="color:#16a085;">{{ article.author }}</span>
-                      &nbsp; 时间：{{ dateFormat(article.meta.updatedAt) }}
-                    </div>
-                    <div class="wrap_item_content_tag">
-                      <el-tag
-                        v-for="atag in article.tags"
-                        :key="atag.id"
-                        size="small"
-                        >{{ atag.name }}</el-tag
-                      >
-                    </div>
-                    <div class="wrap_item_content_desc">
-                      {{ article.describe }}
-                    </div>
-                  </div>
-                </div>
-              </el-card>
+            <div class="article_wrap">
+              <article-item :article="article"></article-item>
             </div>
           </el-col>
           <el-col :span="24">
@@ -70,12 +38,12 @@
           <el-col :span="24">
             <div class="wrap_footer">
               <span class>豫ICP备17049671号</span>
-              <a href="mailto:shuaipengliu@foxmail.com" target="_blank"
-                >shuaipengliu@foxmail.com</a
-              >
-              <a href="https://github.com/liushuaipeng" target="_blank"
-                >github</a
-              >
+              <a href="mailto:shuaipengliu@foxmail.com" target="_blank">
+                shuaipengliu@foxmail.com
+              </a>
+              <a href="https://github.com/liushuaipeng" target="_blank">
+                github
+              </a>
             </div>
           </el-col>
         </el-row>
@@ -86,8 +54,9 @@
 
 <script>
 import { requestArticleList } from "~/assets/api";
-import { anchorPoint, dateFormat } from "~/assets/js/common.js";
+import { anchorPoint } from "~/assets/js/common.js";
 import { imgBase } from "~/assets/js/setting";
+import articleItem from "~/components/articleItem.vue";
 export default {
   head: {
     title: "刘帅鹏的个人网站 - Liu Shuaipeng's Personal Website",
@@ -104,6 +73,9 @@ export default {
     let res = await requestArticleList();
     let list = res.data.list.slice(0, 4);
     return { articleList: list };
+  },
+  components: {
+    articleItem
   },
   data() {
     return {
@@ -124,12 +96,6 @@ export default {
         this.homeBg = `${imgBase}bg_col${Math.floor(Math.random() * 8)}.jpg`;
         this.goBg = `${imgBase}col${Math.floor(Math.random() * 9)}.jpg`;
       }
-    },
-    linkToDetail(id) {
-      this.$router.push("/article/detail/" + id);
-    },
-    dateFormat(date) {
-      return dateFormat(date, "yyyy-MM-dd");
     }
   }
 };
@@ -147,7 +113,6 @@ export default {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    // background-image: url("~assets/images/col0.jpg");
   }
   .wrapper {
     .wrap_header {
@@ -159,9 +124,7 @@ export default {
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover;
-      // background-image: url("~assets/images/bg1.jpg");
       text-align: center;
-
       .title {
         color: #fefefe;
         font-family: Georgia, "Times New Roman", Times, serif;
@@ -199,62 +162,8 @@ export default {
           background-color: rgba(236, 240, 241, 0.7);
         }
       }
-      .wrap_item {
+      .article_wrap {
         padding: 30px;
-        .el-card {
-          display: flex;
-          background-color: rgba(236, 240, 241, 0.8);
-          border-color: #7f8c8d;
-          color: #1a2a3a;
-          cursor: pointer;
-          &.is-hover-shadow:hover {
-            box-shadow: 0 3px 12px 3px #333;
-          }
-        }
-        .wrap_item_image {
-          flex: 0 0 15vw;
-          width: 15vw;
-          min-width: 150px;
-          min-height: 100px;
-          background-image: url("~assets/images/col3.jpg");
-          background-size: contain;
-          background-position: center center;
-          background-repeat: no-repeat;
-        }
-        .wrap_item_content {
-          flex: 1;
-          margin-left: 0.2rem;
-          .wrap_item_content_title {
-            font-size: 20px;
-            font-weight: 600;
-            line-height: 30px;
-            height: 30px;
-            overflow: hidden;
-            &:hover {
-              text-decoration: underline;
-            }
-          }
-          .wrap_item_content_info {
-            height: 30px;
-            font-size: 15px;
-            color: #2a3a4a;
-            line-height: 30px;
-            overflow: hidden;
-          }
-          .wrap_item_content_tag {
-            height: 36px;
-            overflow: hidden;
-            .el-tag {
-              margin: 2px 5px 7px 0;
-            }
-          }
-          .wrap_item_content_desc {
-            font-size: 16px;
-            height: 45px;
-            overflow: hidden;
-            color: #3a4a5a;
-          }
-        }
       }
     }
   }
@@ -298,16 +207,8 @@ export default {
             width: 100%;
           }
         }
-        .wrap_item {
+        .article_wrap {
           padding: 6vw;
-          .wrap_item_content {
-            margin-top: 10px;
-            margin-left: 0;
-          }
-          .wrap_item_image {
-            flex: 0 0 100%;
-            min-height: 150px;
-          }
         }
       }
     }
