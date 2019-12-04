@@ -168,6 +168,7 @@ export default {
       padding-left: 50px;
       .wrap_item {
         margin-bottom: 50px;
+        font-size: 16px;
       }
     }
   }

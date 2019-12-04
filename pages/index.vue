@@ -218,11 +218,7 @@ export default {
   }
 }
 </style>
-<style lang="less">
-.el-card__body {
-  width: 100%;
-}
-</style>
+
 
 
 
