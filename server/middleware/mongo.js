@@ -8,7 +8,10 @@ fs.readdirSync(models)
   .filter(file => ~file.search(/^[^\.].*js$/))
   .forEach(file => require(resolve(models, file)));
 export const mongo = app => {
-  mongoose.connect(config.db, { useNewUrlParser: true });
+  mongoose.connect(config.db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
   mongoose.connection.on("disconnected", () => {
     mongoose.connect(config.db);
   });
