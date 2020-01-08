@@ -50,7 +50,7 @@ export const makeCatalog = function() {
   $("#articleContent")
     .children()
     .each(function() {
-      let reg = /^H[1-6]{1}$/;
+      let reg = /^H[2-6]{1}$/;
       if (reg.exec(this.tagName)) {
         recursion(this, resArr);
       }
