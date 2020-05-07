@@ -29,8 +29,8 @@ export default {
   data() {
     return {
       form: {
-        username: "shuaipengliu@foxmail.com",
-        password: "LIU.0410"
+        username: "",
+        password: ""
       }
     };
   },
