@@ -34,7 +34,7 @@
     "less-loader": "^4.1.0",
     "markdown-it": "^8.4.2",
     "markdown-it-github-headings": "^1.1.2",
-    "mavon-editor": "^2.7.7",
+    "mavon-editor": "^2.8.2",
     "md5": "^2.2.1",
     "mongoose": "^5.7.12",
     "nuxt": "^2.10.2",
